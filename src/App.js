@@ -7,12 +7,14 @@ import "./styles.css";
 function App() {
   const [ repositories, setRepositories ] = useState([]);
 
+  // Render information at page loading
   useEffect(() => {
     api.get('repositories').then(response => {
       setRepositories(response.data);
     });
   }, []);
 
+  // Function to add to the api
   async function handleAddRepository() {
     const resp = await api.post('repositories', {
       title: `New project ${Date.now()}`,
@@ -24,9 +26,10 @@ function App() {
     setRepositories([...repositories, repository]);
   }
 
+  // Function to delte from the api
   async function handleRemoveRepository(id) {
+    // Find the index in the array
     const index = repositories.findIndex(repository => repository.id === id);
-    console.log(index);
 
     repositories.splice(index, 1);
 
